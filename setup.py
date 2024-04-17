@@ -18,6 +18,6 @@ setup(
     name='Conversor',
     version='1.0',
     description='Conversor de planilha',
-    options={'build_exe':build_exe_options},
+    options={'build_exe':build_exe_options},    
     executables=[configuracao]
 )
