@@ -23,5 +23,6 @@ setup(
     version='1.0',
     description='Conversor de planilha',
     options={'build_exe':build_exe_options},    
+    author='Ecod3',    
     executables=[configuracao]
 )
