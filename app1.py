@@ -9,8 +9,8 @@ del workbook['Sheet']
 workbook.create_sheet('Conversao')
 newSheet = workbook['Conversao']
 # Cabeçalho
-newSheet.append(['RG', 'Matr.', 'Ag.', 'Tp.', 'Contrato', 'Et.', 'Dt. Contrato', 'Dt. Prest. In.', 
-                 'Dt. Ater.', 'Valor Base DFI', 'Saldo Devedor', 'DFI', 'MIP', 'ATRS DFI', 'ATRS MIP', 'ST']) 
+newSheet.append(['RG', 'MATR.', 'AG.', 'TP.', 'CONTRATO', 'ET.', 'DT. CONTRATO', 'DT. PREST. IN.', 
+                 'DT. ATER.', 'VALOR BASE DFI', 'SALDO DEVEDOR', 'DFI', 'MIP', 'ATRS DFI', 'ATRS MIP', 'ST']) 
 ########### Configuração da Planilha ############
 #################################################
 ############ Configuração do Layout #############
@@ -43,13 +43,11 @@ while True:
     elif event == 'Converter arquivo':
         with open(values['caminho_arquivo'], 'r') as arquivo:
             i = 1
-            print('Inicio da conversão')
-            sleep(1)
+            print('Inicio da conversão')            
             print('#'*30)
             print('Lendo arquivo')
             for linha in arquivo:
-                print(f'Linha {i}')
-                sleep(1)
+                print(f'Linha {i}')                
                 rg        = linha[0:2]
                 matricula = linha[2:7]
                 ag        = linha[7:9]
@@ -71,11 +69,9 @@ while True:
             print('Fim da leitura')
             print('#'*30)
             print('Gravando planilha')
-            sleep(1)
             workbook.save('arquivo.xlsx')
             print('Planilha gravada')
             print('#'*30)
-            sleep(1)
             print('Fim da Execução!')
 # ################### Execução ####################                
 

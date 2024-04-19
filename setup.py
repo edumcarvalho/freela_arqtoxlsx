@@ -7,7 +7,7 @@ if sys.platform == 'win32':
 
 # Saida de arquivos
 configuracao = Executable(
-    script='app.py',
+    script='app1.py',
     icon='robo.ico',
     base=base
 )

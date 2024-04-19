@@ -1,5 +1,4 @@
 import openpyxl
-from time import sleep
 from pathlib import Path
 import os
 
@@ -12,7 +11,7 @@ def gerar_planilhas():
     ################ Lendo arquivos #################
     j = 1              
     print('Inicio da conversão')
-    sleep(1)
+
     for arquivo in arquivos:          
         
         nome_arquivo = os.path.splitext(arquivo)[0]
@@ -34,8 +33,7 @@ def gerar_planilhas():
             print('Lendo arquivo:')
             print(arquivo)            
             for linha in arq:
-                print(f'Linha {i}')
-                sleep(1)
+                print(f'Linha {i}')                
                 rg        = linha[0:2]
                 matricula = linha[2:7]
                 ag        = linha[7:9]
@@ -55,12 +53,10 @@ def gerar_planilhas():
                 newSheet.append([rg,matricula,ag,tp,contrato,et,dt_contra,dt_presti,dt_altera,vlbasedif,saldo_dev,dfi,mip,atrs_dfi,atrs_mip,st])
                 i += 1
             print('Fim da leitura')            
-            print('Gravando planilha')
-            sleep(1)
+            print('Gravando planilha')            
             workbook.save(f'{nome_arquivo}.xlsx')                        
             del workbook['Conversao']
-            print('Planilha gravada')            
-            sleep(1)            
+            print('Planilha gravada')                        
         j +=1
     print('Fim da Execução!')
 
