@@ -1,52 +1,39 @@
-import PySimpleGUI as sg
 import openpyxl
 from time import sleep
+from pathlib import Path
+import os
 
-########### Configuração da Planilha ############
-workbook = openpyxl.Workbook()
-del workbook['Sheet']
-workbook.create_sheet('Conversao')
-newSheet = workbook['Conversao']
-# Cabeçalho
-newSheet.append(['RG', 'Matr.', 'Ag.', 'Tp.', 'Contrato', 'Et.', 'Dt. Contrato', 'Dt. Prest. In.', 
-                 'Dt. Ater.', 'Valor Base DFI', 'Saldo Devedor', 'DFI', 'MIP', 'ATRS DFI', 'ATRS MIP', 'ST']) 
-########### Configuração da Planilha ############
-#################################################
-############ Configuração do Layout #############
-sg.theme('Reddit')
+def gerar_planilhas():  
+    workbook = openpyxl.Workbook()    
+    del workbook['Sheet']
+    
+    path = Path(os.getcwd())        
+    arquivos = path.glob('*.ARQ')
+    ################ Lendo arquivos #################
+    j = 1              
+    print('Inicio da conversão')
+    sleep(1)
+    for arquivo in arquivos:          
+        
+        nome_arquivo = os.path.splitext(arquivo)[0]
+        nome_arquivo = nome_arquivo.split('/')
+        nome_arquivo = nome_arquivo[-1]
+        print('nome_arquivo')
+        print(nome_arquivo)
 
-layout = [    
-    [sg.FileBrowse('Selecionar arquivo', target='caminho_arquivo', file_types=(
-        ('Arquivos ARQ', '*.ARQ'), ('Arquivos de texto', '*.txt'), ('Todos arquivos', '*')))],
-    [sg.Input(key='caminho_arquivo')],    
-]
 
-layout_output = [
-    [sg.Output(size=(45, 10))]
-]
-
-layout_principal = [
-    [sg.Frame('Conversor de arquivo', layout)],
-    [sg.Frame('Log de atividades', layout_output)],
-    [sg.Button('Converter arquivo')]
-]
-
-window = sg.Window('Automação de sites', layout=layout_principal)
-############ Configuração do Layout #############
-#################################################
-################### Execução ####################
-while True:
-    event, values = window.read()
-    if event == sg.WIN_CLOSED:
-        break
-    elif event == 'Converter arquivo':
-        with open(values['caminho_arquivo'], 'r') as arquivo:
-            i = 1
-            print('Inicio da conversão')
-            sleep(1)
+        with open(arquivo, 'r') as arq:            
+    
+            workbook.create_sheet('Conversao')
+            newSheet = workbook['Conversao']
+            # Cabeçalho
+            newSheet.append(['RG', 'MATR.', 'AG.', 'TP.', 'CONTRATO', 'ET.', 'DT. CONTRATO', 'DT. PREST. IN.', 
+                            'DT. ATER.', 'VALOR BASE DFI', 'SALDO DEVEDOR', 'DFI', 'MIP', 'ATRS DFI', 'ATRS MIP', 'ST']) 
+            i = 1            
             print('#'*30)
-            print('Lendo arquivo')
-            for linha in arquivo:
+            print('Lendo arquivo:')
+            print(arquivo)            
+            for linha in arq:
                 print(f'Linha {i}')
                 sleep(1)
                 rg        = linha[0:2]
@@ -67,13 +54,21 @@ while True:
                 st        = linha[609:610]               
                 newSheet.append([rg,matricula,ag,tp,contrato,et,dt_contra,dt_presti,dt_altera,vlbasedif,saldo_dev,dfi,mip,atrs_dfi,atrs_mip,st])
                 i += 1
-            print('Fim da leitura')
-            print('#'*30)
+            print('Fim da leitura')            
             print('Gravando planilha')
             sleep(1)
-            workbook.save('arquivo.xlsx')
-            print('Planilha gravada')
-            print('#'*30)
-            sleep(1)
-            print('Fim da Execução!')
+            workbook.save(f'{nome_arquivo}.xlsx')                        
+            del workbook['Conversao']
+            print('Planilha gravada')            
+            sleep(1)            
+        j +=1
+    print('Fim da Execução!')
+
+################### Execução ####################
+if __name__ == '__main__':
+    gerar_planilhas()
+
+
+    
+        
 ################### Execução ####################                

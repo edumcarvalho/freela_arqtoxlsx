@@ -1,28 +1,27 @@
 import sys
 from cx_Freeze import setup, Executable
 
-# definir quais dependências meu projeto possui
-build_exe_options = {
-    'packages': ['os'],
-    'includes': ['tkinter'],
-    # 'include_msvcr': True # para windows!!
-}
-
 base = None
 if sys.platform == 'win32':
     base = 'Win32GUI'
 
+# Saida de arquivos
 configuracao = Executable(
     script='app.py',
     icon='robo.ico',
     base=base
 )
-
+# Configurar o executável
 setup(
-    name='Conversor',
+    name='Automatizador de login',
     version='1.0',
-    description='Conversor de planilha',
-    options={'build_exe':build_exe_options},    
-    author='Ecod3',    
+    description='Este programa automatizar o login deste site',
+    author='Jhonatan de Souza',
+    options={'build_exe':{    
+        'include_msvcr': True # para windows!!
+    }},
     executables=[configuracao]
 )
+
+#ABRIR O TERMINAL E DIGITAR
+# python3 setup.py build
